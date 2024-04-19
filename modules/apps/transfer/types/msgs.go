@@ -33,7 +33,7 @@ func NewMsgTransfer(
 	timeoutHeight clienttypes.Height, timeoutTimestamp uint64,
 	memo string,
 ) *MsgTransfer {
-	return &MsgTransfer{
+	v := &MsgTransfer{
 		SourcePort:       sourcePort,
 		SourceChannel:    sourceChannel,
 		Token:            token,
@@ -43,6 +43,10 @@ func NewMsgTransfer(
 		TimeoutTimestamp: timeoutTimestamp,
 		Memo:             memo,
 	}
+	if err := v.ValidateBasic(); err != nil {
+		panic(err)
+	}
+	return v
 }
 
 // Type implements legacytx.LegacyMsg
