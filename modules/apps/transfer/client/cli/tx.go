@@ -84,6 +84,10 @@ corresponding to the counterparty channel. Any timeout set to 0 is disabled.`),
 				return err
 			}
 
+			if len(memo) > types.DefaultMaxMemoLength {
+				return fmt.Errorf("memo is too long %d (maximum %d)", len(memo), types.DefaultMaxMemoLength)
+			}
+
 			// if the timeouts are not absolute, retrieve latest block height and block timestamp
 			// for the consensus state connected to the destination port/channel.
 			// localhost clients must rely solely on local clock time in order to use relative timestamps.
